@@ -20,7 +20,7 @@ from acegen.scoring_functions import (
     Task,
 )
 from acegen.vocabulary import Vocabulary
-from omegaconf import OmegaConf, open_dict
+from omegaconf import OmegaConf, open_dict, DictConfig
 from tensordict.utils import isin
 
 from torchrl.data import (
@@ -53,6 +53,9 @@ os.chdir("/tmp")
     version_base="1.2",
 )
 def main(cfg: "DictConfig"):
+
+    while isinstance(cfg2 := list(cfg.values())[0], DictConfig):
+        cfg = cfg2
 
     if isinstance(cfg.seed, int):
         cfg.seed = [cfg.seed]

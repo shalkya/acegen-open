@@ -20,7 +20,7 @@ from acegen.models import (
     create_gru_actor_critic,
     create_gru_critic,
 )
-from omegaconf import OmegaConf
+from omegaconf import OmegaConf, DictConfig
 from torchrl.collectors import SyncDataCollector
 from torchrl.data import (
     LazyMemmapStorage,
@@ -59,6 +59,9 @@ except ImportError as err:
     version_base="1.2",
 )
 def main(cfg: "DictConfig"):
+
+    while isinstance(cfg2 := list(cfg.values())[0], DictConfig):
+        cfg = cfg2
 
     # Save config
     current_time = datetime.datetime.now()
